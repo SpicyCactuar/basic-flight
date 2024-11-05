@@ -26,6 +26,8 @@ public:
     // (x, y, z) |-> (x, z, -y)
     Matrix4 world2OpenGLMatrix;
 
+    bool shouldExit;
+
     Scene(const Cartesian3& initialPosition);
 
     // timeStep is measured in meters/seconds to streamline calculations
@@ -57,8 +59,6 @@ public:
 
     // Increases flight speed in forward direction by step, capped at maxFlightSpeed
     void decreaseSpeed();
-
-    bool shouldExit;
 
 private:
     Cartesian3 planePosition;

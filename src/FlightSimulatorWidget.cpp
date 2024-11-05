@@ -85,11 +85,11 @@ void FlightSimulatorWidget::keyPressEvent(QKeyEvent* event) {
 }
 
 void FlightSimulatorWidget::nextFrame() {
-    scene->update(timeStep);
-
     if (scene->shouldExit) {
         exit(0);
     }
+
+    scene->update(timeStep);
 
     update();
 }
