@@ -16,7 +16,7 @@
 #endif
 
 // three local variables with the hardcoded file names
-const std::string groundModelName = "assets/landscape.dem";
+const std::string terrainName = "assets/landscape.dem";
 const std::string planeModelName = "assets/planeModel.tri";
 const std::string lavaBombModelName = "assets/lavaBombModel.tri";
 
@@ -45,7 +45,7 @@ Scene::Scene(const Cartesian3& initialPosition)
     : shouldExit(false),
       flightSpeed(0),
       chronometer(0.0f) {
-    groundModel.readTerrainFile(groundModelName.data(), 500);
+    terrain.readTerrainFile(terrainName.data(), 500);
     planeModel.readTriangleSoupFile(planeModelName.data());
     lavaBombModel.readTriangleSoupFile(lavaBombModelName.data());
 
@@ -137,7 +137,7 @@ void Scene::checkPlaneCollision() {
     const auto terrainPoint = Cartesian3(
         planePosition.x,
         planePosition.y,
-        groundModel.getHeight(planePosition.x, planePosition.y));
+        terrain.getHeight(planePosition.x, planePosition.y));
 
     if (isSpherePointCollision(planePosition, planeRadius, terrainPoint)) {
         shouldExit = true;
@@ -188,7 +188,7 @@ void Scene::refreshLavaBombs() {
         }
 
         for (int i = 0; i < 6; i++) {
-            lavaBombs.emplace_back(collisionPoint, &groundModel);
+            lavaBombs.emplace_back(collisionPoint, &terrain);
         }
     }
     lavaBombCollisionPoints.clear();
@@ -196,7 +196,7 @@ void Scene::refreshLavaBombs() {
     // No need to do epsilon comparison, fine-grained accuracy is not needed
     if (chronometer >= deltaTimeToSpawnParticle && lavaBombs.size() < lavaBombsSpawnThreshold) {
         chronometer = 0.0f;
-        lavaBombs.emplace_back(volcanoTip, &groundModel);
+        lavaBombs.emplace_back(volcanoTip, &terrain);
     }
 }
 
@@ -247,7 +247,7 @@ void Scene::updateCameraMatrix() {
 
 void Scene::renderTerrain() const {
     const Matrix4 terrainViewMatrix = computeViewMatrix(worldOrigin);
-    groundModel.render(terrainViewMatrix);
+    terrain.render(terrainViewMatrix);
 }
 
 void Scene::renderLavaBombs() {

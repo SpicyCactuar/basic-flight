@@ -19,7 +19,7 @@ const Cartesian3 forward(0.0, 1.0f, 0.0);
 
 class Scene {
 public:
-    Terrain groundModel;
+    Terrain terrain;
     HomogeneousFaceSurface planeModel;
     HomogeneousFaceSurface lavaBombModel;
 
