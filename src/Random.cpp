@@ -1,6 +1,6 @@
 #include "Random.h"
 
-#include <math.h>
+#include <cmath>
 
 float randomRange(const float minimum, const float maximum) {
     // Create random number in [minimum, maximum]
@@ -10,7 +10,7 @@ float randomRange(const float minimum, const float maximum) {
     return randomNumber + minimum;
 }
 
-Cartesian3 randomVector(float minimum, float maximum) {
+Cartesian3 randomVector(const float minimum, const float maximum) {
     return {
         randomRange(minimum, maximum),
         randomRange(minimum, maximum),
@@ -23,7 +23,7 @@ Cartesian3 randomUnitVectorInUpwardsCone(const float minimumAngle,
                                          const float maximumLength) {
     // use the minimum vertical angle to compute a cosine *downward* from azimuth
     // i.e. use the sine instead
-    const float minimumCosineValue = sin(minimumAngle);
+    const float minimumCosineValue = std::sin(minimumAngle);
 
     // loop until good vector
     while (true) {
